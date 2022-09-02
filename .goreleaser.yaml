@@ -32,4 +32,4 @@ changelog:
       - '^test:'
 dockers:
   - image_templates:
-      - user/repo
+      - richardwoodingpersonal/powerdown
