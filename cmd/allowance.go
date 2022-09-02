@@ -37,6 +37,7 @@ See: https://documenter.getpostman.com/view/1296288/UzQuNk3E#10647b8e-c839-4d56-
 	RunE: func(cmd *cobra.Command, args []string) error {
 		allowanceResponse, err := client.Allowance()
 		if err == nil {
+			println()
 			allowance := allowanceResponse.Allowance
 			tbl := table.New("Count", "Limit", "Type")
 			tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
