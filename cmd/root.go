@@ -23,13 +23,29 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/fatih/color"
+	"github.com/rodaine/table"
+	"github.com/richardwooding/powerdown/api"
+	"log"
 	"os"
+	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 var cfgFile string
+var client api.Client
+var headerFmt table.Formatter
+var columnFmt table.Formatter
+
+const (
+
+	// The environment variable prefix of all environment variables bound to our command line flags.
+	// For example, --number is bound to STING_NUMBER.
+	envPrefix = "STING"
+)
+
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -63,10 +79,16 @@ func init() {
 	// will be global for your application.
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.powerdown.yaml)")
+	rootCmd.PersistentFlags().String("token", "", "EskomSePush token")
+	if err := viper.BindPFlag("token", rootCmd.PersistentFlags().Lookup("token")); err != nil {
+		log.Fatal("Unable to bind flag:", err)
+	}
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	headerFmt = color.New(color.FgGreen, color.Underline).SprintfFunc()
+	columnFmt = color.New(color.FgYellow).SprintfFunc()
 }
 
 // initConfig reads in config file and ENV variables if set.
@@ -91,4 +113,9 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
 	}
+
+	client, _ = api.NewRestClient(viper.GetString("token"), 30 * time.Second)
+
 }
+
+
