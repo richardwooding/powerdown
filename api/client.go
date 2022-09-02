@@ -26,5 +26,6 @@ import "github.com/richardwooding/powerdown/model"
 type Client interface {
 	Allowance() (*model.AllowanceResponse, error)
 	SearchAreasByText(text string) (*model.AreasResponse, error)
-	//SearchAreasByLatLong(lat, long float64) (*model.AreasResponse, error)
+	SearchAreasByLatLong(lat, lon float64) (*model.AreasResponse, error)
+	SearchArea(id string) (*model.AreaResponse, error)
 }

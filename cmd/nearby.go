@@ -22,7 +22,7 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
+	"github.com/rodaine/table"
 
 	"github.com/spf13/cobra"
 )
@@ -37,21 +37,28 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("nearby called")
+	RunE: func(cmd *cobra.Command, args []string) error {
+		lat, _ := cmd.Flags().GetFloat64("lat")
+		lon, _ := cmd.Flags().GetFloat64("lon")
+		println("Search area nearby:", lat, lon)
+		println()
+		areasResponse, err := client.SearchAreasByLatLong(lat, lon)
+		if err == nil {
+			areas := areasResponse.Areas
+			tbl := table.New("Id", "Name", "Region")
+			tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
+			for _, area := range areas {
+				tbl.AddRow(area.Id, area.Name, area.Region)
+			}
+			tbl.Print()
+		}
+		return err
 	},
 }
 
 func init() {
 	searchCmd.AddCommand(nearbyCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// nearbyCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// nearbyCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	nearbyCmd.Flags().Float64("lat", -33.9249, "Latitude")
+	nearbyCmd.Flags().Float64("lon", 18.4241, "Longitude")
 }

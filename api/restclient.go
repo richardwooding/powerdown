@@ -24,6 +24,7 @@ package api
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"github.com/richardwooding/powerdown/model"
 	"io"
 	"net/http"
@@ -32,13 +33,13 @@ import (
 )
 
 type RestClient struct {
-	baseUrl *url.URL
-	userAgent string
-	token string
+	baseUrl    *url.URL
+	userAgent  string
+	token      string
 	httpClient http.Client
 }
 
-func NewRestClient(token string, timeout time.Duration) (*RestClient, error){
+func NewRestClient(token string, timeout time.Duration) (*RestClient, error) {
 	restClient := new(RestClient)
 	restClient.userAgent = "powerdown/0.0.1 https://github.com/richardwooding/powerdown"
 	restClient.token = token
@@ -46,13 +47,11 @@ func NewRestClient(token string, timeout time.Duration) (*RestClient, error){
 		Timeout: timeout,
 	}
 	baseUrl, err := url.Parse("https://developer.sepush.co.za/business/2.0/")
-	if (err == nil) {
+	if err == nil {
 		restClient.baseUrl = baseUrl
 	}
 	return restClient, err
 }
-
-
 
 func (c *RestClient) Allowance() (*model.AllowanceResponse, error) {
 	req, err := c.newRequest(http.MethodGet, "./api_allowance", nil)
@@ -74,17 +73,36 @@ func (c *RestClient) SearchAreasByText(text string) (*model.AreasResponse, error
 	return &areasResponse, err
 }
 
+func (c *RestClient) SearchAreasByLatLong(lat float64, lon float64) (*model.AreasResponse, error) {
+	req, err := c.newRequestWithParams(http.MethodGet, "./areas_nearby", nil, map[string]string{"lat": fmt.Sprint("%f", lat), "lon": fmt.Sprint("%f", lon)})
+	if err != nil {
+		return nil, err
+	}
+	var areasResponse model.AreasResponse
+	_, err = c.do(req, &areasResponse)
+	return &areasResponse, err
+}
+
+func (c *RestClient) SearchArea(id string) (*model.AreaResponse, error) {
+	req, err := c.newRequestWithParams(http.MethodGet, "./area", nil, map[string]string{"id": id})
+	if err != nil {
+		return nil, err
+	}
+	var areaResponse model.AreaResponse
+	_, err = c.do(req, &areaResponse)
+	return &areaResponse, err
+}
+
 func (c *RestClient) newRequest(method, path string, body interface{}) (*http.Request, error) {
 	return c.newRequestWithParams(method, path, body, map[string]string{})
 }
-
 
 func (c *RestClient) newRequestWithParams(method, path string, body interface{}, params map[string]string) (*http.Request, error) {
 	rel := &url.URL{Path: path}
 	u := c.baseUrl.ResolveReference(rel)
 	if len(params) > 0 {
 		q := u.Query()
-		for param,value := range params {
+		for param, value := range params {
 			q.Set(param, value)
 		}
 		u.RawQuery = q.Encode()
@@ -119,4 +137,3 @@ func (c *RestClient) do(req *http.Request, v interface{}) (*http.Response, error
 	err = json.NewDecoder(resp.Body).Decode(v)
 	return resp, err
 }
-

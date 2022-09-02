@@ -29,15 +29,15 @@ import (
 // textCmd represents the text command
 var textCmd = &cobra.Command{
 	Use:   "text",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Search areas by text",
+	Long: `Search areas by text
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Ref: https://documenter.getpostman.com/view/1296288/UzQuNk3E#1986b098-ad88-436c-a5cd-5aa406e2fcf2`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		areasResponse, err := client.SearchAreasByText(cmd.Flag("value").Value.String())
+		query := cmd.Flag("query").Value.String()
+		println("Search area matching:", query)
+		println()
+		areasResponse, err := client.SearchAreasByText(query)
 		if err == nil {
 			areas := areasResponse.Areas
 			tbl := table.New("Id", "Name", "Region")
@@ -54,6 +54,6 @@ to quickly create a Cobra application.`,
 func init() {
 	searchCmd.AddCommand(textCmd)
 
-	textCmd.Flags().String("value", "v", "Search text" )
+	textCmd.Flags().StringP("query", "q", "Cape Town", "Search text" )
 
 }
