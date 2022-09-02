@@ -74,7 +74,7 @@ func (c *RestClient) SearchAreasByText(text string) (*model.AreasResponse, error
 }
 
 func (c *RestClient) SearchAreasByLatLong(lat float64, lon float64) (*model.AreasResponse, error) {
-	req, err := c.newRequestWithParams(http.MethodGet, "./areas_nearby", nil, map[string]string{"lat": fmt.Sprint("%f", lat), "lon": fmt.Sprint("%f", lon)})
+	req, err := c.newRequestWithParams(http.MethodGet, "./areas_nearby", nil, map[string]string{"lat": fmt.Sprintf("%f", lat), "lon": fmt.Sprintf("%f", lon)})
 	if err != nil {
 		return nil, err
 	}
