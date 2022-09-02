@@ -19,12 +19,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package api
+package model
 
-import "github.com/richardwooding/powerdown/model"
-
-type Client interface {
-	Allowance() (*model.AllowanceResponse, error)
-	SearchAreasByText(text string) (*model.AreasResponse, error)
-	//SearchAreasByLatLong(lat, long float64) (*model.AreasResponse, error)
+type AreasResponse struct {
+	Areas []struct {
+		Id     string `json:"id"`
+		Name   string `json:"name"`
+		Region string `json:"region"`
+	} `json:"areas"`
 }

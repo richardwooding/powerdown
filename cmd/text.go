@@ -22,8 +22,7 @@ THE SOFTWARE.
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/rodaine/table"
 	"github.com/spf13/cobra"
 )
 
@@ -37,21 +36,24 @@ and usage of using your command. For example:
 Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("text called")
+	RunE: func(cmd *cobra.Command, args []string) error {
+		areasResponse, err := client.SearchAreasByText(cmd.Flag("value").Value.String())
+		if err == nil {
+			areas := areasResponse.Areas
+			tbl := table.New("Id", "Name", "Region")
+			tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
+			for _, area := range areas {
+				tbl.AddRow(area.Id, area.Name, area.Region)
+			}
+			tbl.Print()
+		}
+		return err
 	},
 }
 
 func init() {
 	searchCmd.AddCommand(textCmd)
 
-	// Here you will define your flags and configuration settings.
+	textCmd.Flags().String("value", "v", "Search text" )
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// textCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// textCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }

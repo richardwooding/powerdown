@@ -40,6 +40,7 @@ type RestClient struct {
 
 func NewRestClient(token string, timeout time.Duration) (*RestClient, error){
 	restClient := new(RestClient)
+	restClient.userAgent = "powerdown/0.0.1 https://github.com/richardwooding/powerdown"
 	restClient.token = token
 	restClient.httpClient = http.Client{
 		Timeout: timeout,
@@ -61,12 +62,33 @@ func (c *RestClient) Allowance() (*model.AllowanceResponse, error) {
 	var allowanceResponse model.AllowanceResponse
 	_, err = c.do(req, &allowanceResponse)
 	return &allowanceResponse, err
+}
 
+func (c *RestClient) SearchAreasByText(text string) (*model.AreasResponse, error) {
+	req, err := c.newRequestWithParams(http.MethodGet, "./areas_search", nil, map[string]string{"text": text})
+	if err != nil {
+		return nil, err
+	}
+	var areasResponse model.AreasResponse
+	_, err = c.do(req, &areasResponse)
+	return &areasResponse, err
 }
 
 func (c *RestClient) newRequest(method, path string, body interface{}) (*http.Request, error) {
+	return c.newRequestWithParams(method, path, body, map[string]string{})
+}
+
+
+func (c *RestClient) newRequestWithParams(method, path string, body interface{}, params map[string]string) (*http.Request, error) {
 	rel := &url.URL{Path: path}
 	u := c.baseUrl.ResolveReference(rel)
+	if len(params) > 0 {
+		q := u.Query()
+		for param,value := range params {
+			q.Set(param, value)
+		}
+		u.RawQuery = q.Encode()
+	}
 	var buf io.ReadWriter
 	if body != nil {
 		buf = new(bytes.Buffer)

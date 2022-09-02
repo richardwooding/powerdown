@@ -30,13 +30,10 @@ import (
 // allowanceCmd represents the allowance command
 var allowanceCmd = &cobra.Command{
 	Use:   "allowance",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Retrieves information about the allowance of your EskomSePush token",
+	Long: `Retrieves information about the allowance of your EskomSePush token
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+See: https://documenter.getpostman.com/view/1296288/UzQuNk3E#10647b8e-c839-4d56-82a2-d9a406ae4f18"`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		allowanceResponse, err := client.Allowance()
 		if err == nil {
@@ -52,14 +49,4 @@ to quickly create a Cobra application.`,
 
 func init() {
 	rootCmd.AddCommand(allowanceCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// allowanceCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// allowanceCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
