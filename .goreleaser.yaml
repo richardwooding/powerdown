@@ -30,3 +30,6 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+dockers:
+  - image_templates:
+      - user/repo
