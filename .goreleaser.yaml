@@ -36,3 +36,14 @@ dockers:
       - "ghcr.io/richardwooding/powerdown:v{{ .Major }}"
       - "ghcr.io/richardwooding/powerdown:v{{ .Major }}.{{ .Minor }}"
       - "ghcr.io/richardwooding/powerdown:latest"
+
+release:
+  github:
+    owner: richardwooding
+    name: powerdown
+  footer: |
+    ## Docker Images
+    - "ghcr.io/richardwooding/powerdown:{{ .Tag }}"
+    - "ghcr.io/richardwooding/powerdown:v{{ .Major }}"
+    - "ghcr.io/richardwooding/powerdown:v{{ .Major }}.{{ .Minor }}"
+    - "ghcr.io/richardwooding/powerdown:latest"
