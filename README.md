@@ -10,7 +10,13 @@ The contents of the file should be as follows
 ```
 token: <your-api-token>
 ```
-Alternatively you can use the `--token string` flag 
+If you know your areas id you can use
+```
+token: <your-api-token>
+id: <your-area-id>
+```
+
+Alternatively you can use the `--token string` and the `--id string` flag 
 ## Usage
 ```
 CLI interface to the EskomSePush API

@@ -25,6 +25,8 @@ import (
 	"fmt"
 	"github.com/rodaine/table"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+	"log"
 )
 
 // areaCmd represents the area command
@@ -35,7 +37,7 @@ var areaCmd = &cobra.Command{
 
 Ref: https://documenter.getpostman.com/view/1296288/UzQuNk3E#1881472b-c959-4259-b574-177feb5e0cda`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		id := cmd.Flag("id").Value.String()
+		id := viper.GetString("id")
 		println("Retrieving information for area:", id)
 		println()
 		areaResponse, err := client.SearchArea(id)
@@ -81,6 +83,9 @@ func init() {
 	rootCmd.AddCommand(areaCmd)
 
 	areaCmd.Flags().String("id", "", "Area id")
+	if err := viper.BindPFlag("id", areaCmd.Flags().Lookup("id")); err != nil {
+		log.Fatal("Unable to bind flag:", err)
+	}
 }
 
 func stageString(stage []string) string {
