@@ -32,6 +32,9 @@ Flags:
 
 Use "powerdown [command] --help" for more information about a command.
 ```
-
+## Run with docker
+```
+docker run --volume $HOME/.powerdown.yaml:/.powerdown.yaml ghcr.io/richardwooding/powerdown allowance
+```
 ### Check your allowance
 

@@ -63,7 +63,7 @@ Ref: https://documenter.getpostman.com/view/1296288/UzQuNk3E#1881472b-c959-4259-
 					println(0)
 					tbl.AddRow(day.Date, day.Name, "")
 				} else {
-				    tbl.AddRow(day.Date, day.Name, stageString(stages[0]))
+				    tbl.AddRow(day.Date, day.Name, stageString(stages))
 				    if len(stages) > 1 {
 						for _, stage := range stages[1:] {
 							tbl.AddRow("", "", stageString(stage))
