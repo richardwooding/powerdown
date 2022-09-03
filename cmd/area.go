@@ -63,7 +63,7 @@ Ref: https://documenter.getpostman.com/view/1296288/UzQuNk3E#1881472b-c959-4259-
 					println(0)
 					tbl.AddRow(day.Date, day.Name, "")
 				} else {
-				    tbl.AddRow(day.Date, day.Name, stageString(stages))
+				    tbl.AddRow(day.Date, day.Name, stageString(stages[0]))
 				    if len(stages) > 1 {
 						for _, stage := range stages[1:] {
 							tbl.AddRow("", "", stageString(stage))
@@ -86,6 +86,8 @@ func init() {
 func stageString(stage []string) string {
 	if len(stage) == 0 {
 		return ""
+	} else if len(stage) == 1 {
+		return stage[0]
 	} else {
 		return fmt.Sprintf("%s - %s", stage[0], stage[1])
 	}
