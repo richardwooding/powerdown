@@ -22,6 +22,7 @@ THE SOFTWARE.
 package cmd
 
 import (
+	"fmt"
 	"github.com/rodaine/table"
 
 	"github.com/spf13/cobra"
@@ -40,15 +41,15 @@ to quickly create a Cobra application.`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		lat, _ := cmd.Flags().GetFloat64("lat")
 		lon, _ := cmd.Flags().GetFloat64("lon")
-		println("Search area nearby:", lat, lon)
+		fmt.Sprintf("Search area nearby: %f %f\n", lat, lon)
 		println()
 		areasResponse, err := client.SearchAreasByLatLong(lat, lon)
 		if err == nil {
 			areas := areasResponse.Areas
-			tbl := table.New("Id", "Name", "Region")
+			tbl := table.New("Count", "Id")
 			tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
 			for _, area := range areas {
-				tbl.AddRow(area.Id, area.Name, area.Region)
+				tbl.AddRow(area.Count, area.Id)
 			}
 			tbl.Print()
 		}

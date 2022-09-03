@@ -73,14 +73,14 @@ func (c *RestClient) SearchAreasByText(text string) (*model.AreasResponse, error
 	return &areasResponse, err
 }
 
-func (c *RestClient) SearchAreasByLatLong(lat float64, lon float64) (*model.AreasResponse, error) {
+func (c *RestClient) SearchAreasByLatLong(lat float64, lon float64) (*model.NearbyResponse, error) {
 	req, err := c.newRequestWithParams(http.MethodGet, "./areas_nearby", nil, map[string]string{"lat": fmt.Sprintf("%f", lat), "lon": fmt.Sprintf("%f", lon)})
 	if err != nil {
 		return nil, err
 	}
-	var areasResponse model.AreasResponse
-	_, err = c.do(req, &areasResponse)
-	return &areasResponse, err
+	var nearbyResponse model.NearbyResponse
+	_, err = c.do(req, &nearbyResponse)
+	return &nearbyResponse, err
 }
 
 func (c *RestClient) SearchArea(id string) (*model.AreaResponse, error) {
