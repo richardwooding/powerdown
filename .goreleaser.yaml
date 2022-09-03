@@ -32,4 +32,4 @@ changelog:
       - '^test:'
 dockers:
   - image_templates:
-      - richardwoodingpersonal/powerdown
+      - ghcr.io/richardwooding/powerdown
