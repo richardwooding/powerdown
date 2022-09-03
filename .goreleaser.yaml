@@ -32,4 +32,7 @@ changelog:
       - '^test:'
 dockers:
   - image_templates:
-      - ghcr.io/richardwooding/powerdown
+      - "ghcr.io/richardwooding/powerdown:{{ .Tag }}"
+      - "ghcr.io/richardwooding/powerdown:v{{ .Major }}"
+      - "ghcr.io/richardwooding/powerdown:v{{ .Major }}.{{ .Minor }}"
+      - "ghcr.io/richardwooding/powerdown:latest"
