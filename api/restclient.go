@@ -83,8 +83,13 @@ func (c *RestClient) SearchAreasByLatLong(lat float64, lon float64) (*model.Near
 	return &nearbyResponse, err
 }
 
-func (c *RestClient) SearchArea(id string) (*model.AreaResponse, error) {
-	req, err := c.newRequestWithParams(http.MethodGet, "./area", nil, map[string]string{"id": id})
+func (c *RestClient) SearchArea(id string, simulateEvent string) (*model.AreaResponse, error) {
+	params := map[string]string{"id": id}
+
+	if simulateEvent != "" {
+		params["test"] = simulateEvent
+	}
+	req, err := c.newRequestWithParams(http.MethodGet, "./area", nil, params)
 	if err != nil {
 		return nil, err
 	}

@@ -40,7 +40,8 @@ Ref: https://documenter.getpostman.com/view/1296288/UzQuNk3E#1881472b-c959-4259-
 		id := viper.GetString("id")
 		println("Retrieving information for area:", id)
 		println()
-		areaResponse, err := client.SearchArea(id)
+		simulateEvent, _ := cmd.Flags().GetString("simulate-event")
+		areaResponse, err := client.SearchArea(id, simulateEvent )
 		if err == nil {
 			info := areaResponse.Info
 			tbl := table.New("Name", "Region")
@@ -83,6 +84,8 @@ func init() {
 	rootCmd.AddCommand(areaCmd)
 
 	areaCmd.Flags().String("id", "", "Area id")
+	areaCmd.Flags().String("simulate-event", "", "Simulate an event (current/future)")
+
 	if err := viper.BindPFlag("id", areaCmd.Flags().Lookup("id")); err != nil {
 		log.Fatal("Unable to bind flag:", err)
 	}
