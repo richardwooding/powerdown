@@ -94,6 +94,6 @@ func stageString(stage []string) string {
 	} else if len(stage) == 1 {
 		return stage[0]
 	} else {
-		return fmt.Sprintf("%s - %s", stage[0], stage[1])
+		return fmt.Sprintf("%s %s", stage[0], stage[1])
 	}
 }
