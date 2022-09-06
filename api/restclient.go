@@ -26,6 +26,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/richardwooding/powerdown/model"
+	"github.com/richardwooding/powerdown/version"
 	"io"
 	"net/http"
 	"net/url"
@@ -41,7 +42,7 @@ type RestClient struct {
 
 func NewRestClient(token string, timeout time.Duration) (*RestClient, error) {
 	restClient := new(RestClient)
-	restClient.userAgent = "powerdown/0.0.1 https://github.com/richardwooding/powerdown"
+	restClient.userAgent = "powerdown/" + version.Version + " https://github.com/richardwooding/powerdown"
 	restClient.token = token
 	restClient.httpClient = http.Client{
 		Timeout: timeout,

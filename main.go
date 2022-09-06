@@ -23,6 +23,16 @@ package main
 
 import "github.com/richardwooding/powerdown/cmd"
 
+var (
+	version = "dev"
+	commit = ""
+	date = ""
+)
+
+func GetVersionString() string {
+	return version
+}
+
 func main() {
 	cmd.Execute()
 }
