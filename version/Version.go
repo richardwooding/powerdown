@@ -29,13 +29,13 @@ import (
 
 
 var (
-	Version = "devel"
+	Version = ""
 	CommitHash = ""
 	BuildTimestamp = ""
 )
 
 func init() {
-	if Version == "devel" {
+	if Version == "" {
 		_ = bitio.NewReader
 		bi, ok := debug.ReadBuildInfo()
 		if !ok {
@@ -43,6 +43,7 @@ func init() {
 		}
 		for _, dep := range bi.Deps {
 			if dep.Path == "github.com/richardwooding/powerdown" {
+				println("Found version: " + dep.Version)
 				Version = dep.Version
 			}
 		}
