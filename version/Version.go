@@ -21,40 +21,8 @@ THE SOFTWARE.
 */
 package version
 
-import (
-	"fmt"
-	"runtime/debug"
-	"github.com/icza/bitio"
-)
-
-
 var (
 	Version = ""
 	CommitHash = ""
 	BuildTimestamp = ""
 )
-
-func init() {
-	if Version == "" {
-		_ = bitio.NewReader
-		bi, ok := debug.ReadBuildInfo()
-		if !ok {
-			return
-		}
-		for _, dep := range bi.Deps {
-			println(dep.Path + " is " + dep.Version)
-			if dep.Path == "github.com/richardwooding/powerdown" {
-				println("Found version: " + dep.Version)
-				Version = dep.Version
-			}
-		}
-	}
-}
-
-func BuildSimpleVersion() string {
-	return fmt.Sprintf("%s", Version)
-}
-
-func BuildVersion() string {
-	return fmt.Sprintf("%s-%s (%s)", Version, CommitHash, BuildTimestamp)
-}
