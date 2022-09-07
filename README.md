@@ -39,9 +39,15 @@ Flags:
 Use "powerdown [command] --help" for more information about a command.
 ```
 
-## Install with homebrew
+## Install/upgrade with homebrew on Mac OS X
+
+### To install
 ```
 brew install richardwooding/repo/powerdown
+```
+### To upgrade
+```
+brew upgrade powerdown
 ```
 
 ## Run with docker
