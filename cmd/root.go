@@ -25,7 +25,6 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/richardwooding/powerdown/api"
-	"github.com/richardwooding/powerdown/version"
 	"github.com/rodaine/table"
 	"log"
 	"os"
@@ -85,8 +84,6 @@ func init() {
 	// rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	headerFmt = color.New(color.FgGreen, color.Underline).SprintfFunc()
 	columnFmt = color.New(color.FgYellow).SprintfFunc()
-
-	println("Powerdown " + version.BuildVersion())
 }
 
 // initConfig reads in config file and ENV variables if set.

@@ -21,18 +21,13 @@ THE SOFTWARE.
 */
 package main
 
-import "github.com/richardwooding/powerdown/cmd"
-
-var (
-	version = "dev"
-	commit = ""
-	date = ""
+import (
+	"github.com/richardwooding/powerdown/cmd"
+	"github.com/richardwooding/powerdown/version"
 )
 
-func GetVersionString() string {
-	return version
-}
-
 func main() {
+	println("Powerdown " + version.Version)
+	println()
 	cmd.Execute()
 }
