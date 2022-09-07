@@ -46,6 +46,9 @@ var iseventsoonCmd = &cobra.Command{
 					println("Do not recommend shutting down")
 					os.Exit(1)
 				}
+			} else {
+				println("Do not recommend shutting down")
+				os.Exit(1)
 			}
 		}
 		return err
