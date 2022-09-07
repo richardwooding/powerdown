@@ -42,6 +42,7 @@ func init() {
 			return
 		}
 		for _, dep := range bi.Deps {
+			println(dep.Path + " is " + dep.Version)
 			if dep.Path == "github.com/richardwooding/powerdown" {
 				println("Found version: " + dep.Version)
 				Version = dep.Version
