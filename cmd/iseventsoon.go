@@ -5,6 +5,7 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"errors"
 	"fmt"
 	"github.com/spf13/viper"
 	"log"
@@ -25,6 +26,9 @@ var iseventsoonCmd = &cobra.Command{
 		suggestShutdownTime, err := cmd.Flags().GetDuration("suggest-shutdown-time")
 		if err != nil {
 			return err
+		}
+		if id == "" {
+			return errors.New("No id specified")
 		}
 		println("Retrieving information for area:", id)
 		println()
@@ -55,7 +59,7 @@ func init() {
 	iseventsoonCmd.Flags().String("simulate-event", "", "Simulate an event (current/future)")
 	iseventsoonCmd.Flags().Duration("suggest-shutdown-time", 1 * time.Hour, "Suggest shutdown if event is in less than or equal to this time")
 
-	if err := viper.BindPFlag("id", areaCmd.Flags().Lookup("id")); err != nil {
+	if err := viper.BindPFlag("id", iseventsoonCmd.Flags().Lookup("id")); err != nil {
 		log.Fatal("Unable to bind flag:", err)
 	}
 }
