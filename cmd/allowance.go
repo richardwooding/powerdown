@@ -31,9 +31,10 @@ import (
 var allowanceCmd = &cobra.Command{
 	Use:   "allowance",
 	Short: "Retrieves information about the allowance of your EskomSePush token",
-	Long: `Retrieves information about the allowance of your EskomSePush token
+	Long: `Retrieves information about the allowance of your EskomSePush token,
 
 See: https://documenter.getpostman.com/view/1296288/UzQuNk3E#10647b8e-c839-4d56-82a2-d9a406ae4f18"`,
+	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		allowanceResponse, err := client.Allowance()
 		if err == nil {

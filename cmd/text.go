@@ -30,11 +30,12 @@ import (
 var textCmd = &cobra.Command{
 	Use:   "text",
 	Short: "Search areas by text",
-	Long: `Search areas by text
+	Long: `Search areas by text,
 
 Ref: https://documenter.getpostman.com/view/1296288/UzQuNk3E#1986b098-ad88-436c-a5cd-5aa406e2fcf2`,
+	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		query := cmd.Flag("query").Value.String()
+		query := args[0]
 		println("Search area matching:", query)
 		println()
 		areasResponse, err := client.SearchAreasByText(query)
@@ -53,7 +54,4 @@ Ref: https://documenter.getpostman.com/view/1296288/UzQuNk3E#1986b098-ad88-436c-
 
 func init() {
 	searchCmd.AddCommand(textCmd)
-
-	textCmd.Flags().StringP("query", "q", "Cape Town", "Search text" )
-
 }

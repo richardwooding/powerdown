@@ -36,6 +36,7 @@ var areaCmd = &cobra.Command{
 	Long: `Retrieve information for your area
 
 Ref: https://documenter.getpostman.com/view/1296288/UzQuNk3E#1881472b-c959-4259-b574-177feb5e0cda`,
+	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		id := viper.GetString("id")
 		println("Retrieving information for area:", id)
