@@ -39,9 +39,9 @@ Flags:
 Use "powerdown [command] --help" for more information about a command.
 ```
 
-## Install with go install
+## Install with homebrew
 ```
-go install github.com/richardwooding/powerdown@latest
+brew install richardwooding/repo/powerdown
 ```
 
 ## Run with docker
