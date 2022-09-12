@@ -19,13 +19,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package api
+package sepush
 
-import "github.com/richardwooding/powerdown/model"
-
-type Client interface {
-	Allowance() (*model.AllowanceResponse, error)
-	SearchAreasByText(text string) (*model.AreasResponse, error)
-	SearchAreasByLatLong(lat, lon float64) (*model.NearbyResponse, error)
-	SearchArea(id string, simulateEvent string) (*model.AreaResponse, error)
+type AreasResponse struct {
+	Areas []struct {
+		Id     string `json:"id"`
+		Name   string `json:"name"`
+		Region string `json:"region"`
+	} `json:"areas"`
 }

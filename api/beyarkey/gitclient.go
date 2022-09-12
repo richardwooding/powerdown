@@ -19,11 +19,4 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package model
-
-type NearbyResponse struct {
-	Areas []struct {
-		Count int    `json:"count"`
-		Id    string `json:"id"`
-	} `json:"areas"`
-}
+package beyarkey

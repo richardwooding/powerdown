@@ -19,26 +19,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package model
+package beyarkey
 
-import "time"
+import "github.com/richardwooding/powerdown/model/beyarkey"
 
-type AreaResponse struct {
-	Events []struct {
-		End   time.Time `json:"end"`
-		Note  string    `json:"note"`
-		Start time.Time `json:"start"`
-	} `json:"events"`
-	Info struct {
-		Name   string `json:"name"`
-		Region string `json:"region"`
-	} `json:"info"`
-	Schedule struct {
-		Days []struct {
-			Date   string     `json:"date"`
-			Name   string     `json:"name"`
-			Stages [][]string `json:"stages"`
-		} `json:"days"`
-		Source string `json:"source"`
-	} `json:"schedule"`
+type Client interface {
+	Changes() (*beyarkey.ChangesFile, error)
 }

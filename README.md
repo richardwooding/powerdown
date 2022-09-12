@@ -1,5 +1,10 @@
 # powerdown 
 CLI interface to the [EskomSePush](https://sepush.co.za/) [API](https://documenter.getpostman.com/view/1296288/UzQuNk3E)
+
+## Synology NAS integration guide.
+
+I'm busy preparing a [Synology NAS integration guide](synology.md).
+
 ## API Token
 You need to provide your own API Token which you can [request here](https://docs.google.com/forms/d/e/1FAIpQLSeZhAkhDaQX_mLT2xn41TkVjLkOH3Py3YWHi_UqQP4niOY01g/viewform).
 
@@ -55,6 +60,20 @@ brew upgrade powerdown
 ```
 
 ## Run with docker
+
+Docker images for powerdown are hosted on [Github Packages](https://github.com/features/packages).
+
+This means that you do need to create a [personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
+and use the token to log docker in.
+
+```
+echo $PAT | docker login ghcr.io --username <github-username> --password-stdin`
+```
+
+Once docker is logged in you can run powerdown docker image.
+
+In this example we mount our local configuration file on the docker image.
+
 ```
 docker run --volume $HOME/.powerdown.yaml:/.powerdown.yaml ghcr.io/richardwooding/powerdown
 ```

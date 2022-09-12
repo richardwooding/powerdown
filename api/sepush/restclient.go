@@ -19,13 +19,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package api
+package sepush
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/richardwooding/powerdown/model"
+	"github.com/richardwooding/powerdown/model/sepush"
 	"github.com/richardwooding/powerdown/version"
 	"io"
 	"net/http"
@@ -33,15 +33,15 @@ import (
 	"time"
 )
 
-type RestClient struct {
+type SePushRestClient struct {
 	baseUrl    *url.URL
 	userAgent  string
 	token      string
 	httpClient http.Client
 }
 
-func NewRestClient(token string, timeout time.Duration) (*RestClient, error) {
-	restClient := new(RestClient)
+func NewSePushRestClient(token string, timeout time.Duration) (*SePushRestClient, error) {
+	restClient := new(SePushRestClient)
 	restClient.userAgent = "powerdown/" + version.Version + " https://github.com/richardwooding/powerdown"
 	restClient.token = token
 	restClient.httpClient = http.Client{
@@ -54,37 +54,37 @@ func NewRestClient(token string, timeout time.Duration) (*RestClient, error) {
 	return restClient, err
 }
 
-func (c *RestClient) Allowance() (*model.AllowanceResponse, error) {
+func (c *SePushRestClient) Allowance() (*sepush.AllowanceResponse, error) {
 	req, err := c.newRequest(http.MethodGet, "./api_allowance", nil)
 	if err != nil {
 		return nil, err
 	}
-	var allowanceResponse model.AllowanceResponse
+	var allowanceResponse sepush.AllowanceResponse
 	_, err = c.do(req, &allowanceResponse)
 	return &allowanceResponse, err
 }
 
-func (c *RestClient) SearchAreasByText(text string) (*model.AreasResponse, error) {
+func (c *SePushRestClient) SearchAreasByText(text string) (*sepush.AreasResponse, error) {
 	req, err := c.newRequestWithParams(http.MethodGet, "./areas_search", nil, map[string]string{"text": text})
 	if err != nil {
 		return nil, err
 	}
-	var areasResponse model.AreasResponse
+	var areasResponse sepush.AreasResponse
 	_, err = c.do(req, &areasResponse)
 	return &areasResponse, err
 }
 
-func (c *RestClient) SearchAreasByLatLong(lat float64, lon float64) (*model.NearbyResponse, error) {
+func (c *SePushRestClient) SearchAreasByLatLong(lat float64, lon float64) (*sepush.NearbyResponse, error) {
 	req, err := c.newRequestWithParams(http.MethodGet, "./areas_nearby", nil, map[string]string{"lat": fmt.Sprintf("%f", lat), "lon": fmt.Sprintf("%f", lon)})
 	if err != nil {
 		return nil, err
 	}
-	var nearbyResponse model.NearbyResponse
+	var nearbyResponse sepush.NearbyResponse
 	_, err = c.do(req, &nearbyResponse)
 	return &nearbyResponse, err
 }
 
-func (c *RestClient) SearchArea(id string, simulateEvent string) (*model.AreaResponse, error) {
+func (c *SePushRestClient) SearchArea(id string, simulateEvent string) (*sepush.AreaResponse, error) {
 	params := map[string]string{"id": id}
 
 	if simulateEvent != "" {
@@ -94,16 +94,16 @@ func (c *RestClient) SearchArea(id string, simulateEvent string) (*model.AreaRes
 	if err != nil {
 		return nil, err
 	}
-	var areaResponse model.AreaResponse
+	var areaResponse sepush.AreaResponse
 	_, err = c.do(req, &areaResponse)
 	return &areaResponse, err
 }
 
-func (c *RestClient) newRequest(method, path string, body interface{}) (*http.Request, error) {
+func (c *SePushRestClient) newRequest(method, path string, body interface{}) (*http.Request, error) {
 	return c.newRequestWithParams(method, path, body, map[string]string{})
 }
 
-func (c *RestClient) newRequestWithParams(method, path string, body interface{}, params map[string]string) (*http.Request, error) {
+func (c *SePushRestClient) newRequestWithParams(method, path string, body interface{}, params map[string]string) (*http.Request, error) {
 	rel := &url.URL{Path: path}
 	u := c.baseUrl.ResolveReference(rel)
 	if len(params) > 0 {
@@ -134,7 +134,7 @@ func (c *RestClient) newRequestWithParams(method, path string, body interface{},
 	return req, nil
 }
 
-func (c *RestClient) do(req *http.Request, v interface{}) (*http.Response, error) {
+func (c *SePushRestClient) do(req *http.Request, v interface{}) (*http.Response, error) {
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, err

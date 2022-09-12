@@ -24,7 +24,7 @@ package cmd
 import (
 	"fmt"
 	"github.com/fatih/color"
-	"github.com/richardwooding/powerdown/api"
+	"github.com/richardwooding/powerdown/api/sepush"
 	"github.com/rodaine/table"
 	"log"
 	"os"
@@ -35,7 +35,7 @@ import (
 )
 
 var cfgFile string
-var client api.Client
+var sePushClient sepush.Client
 var headerFmt table.Formatter
 var columnFmt table.Formatter
 
@@ -109,7 +109,7 @@ func initConfig() {
 		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
 	}
 
-	client, _ = api.NewRestClient(viper.GetString("token"), 30 * time.Second)
+	sePushClient, _ = sepush.NewSePushRestClient(viper.GetString("token"), 30 * time.Second)
 
 }
 

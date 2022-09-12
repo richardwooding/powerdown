@@ -38,7 +38,7 @@ Ref: https://documenter.getpostman.com/view/1296288/UzQuNk3E#1986b098-ad88-436c-
 		query := args[0]
 		println("Search area matching:", query)
 		println()
-		areasResponse, err := client.SearchAreasByText(query)
+		areasResponse, err := sePushClient.SearchAreasByText(query)
 		if err == nil {
 			areas := areasResponse.Areas
 			tbl := table.New("Id", "Name", "Region")

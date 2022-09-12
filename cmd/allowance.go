@@ -36,7 +36,7 @@ var allowanceCmd = &cobra.Command{
 See: https://documenter.getpostman.com/view/1296288/UzQuNk3E#10647b8e-c839-4d56-82a2-d9a406ae4f18"`,
 	Args: cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		allowanceResponse, err := client.Allowance()
+		allowanceResponse, err := sePushClient.Allowance()
 		if err == nil {
 			println()
 			allowance := allowanceResponse.Allowance

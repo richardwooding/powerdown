@@ -19,43 +19,12 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package cmd
+package sepush
 
-import (
-	"fmt"
-	"github.com/rodaine/table"
-
-	"github.com/spf13/cobra"
-)
-
-// nearbyCmd represents the nearby command
-var nearbyCmd = &cobra.Command{
-	Use:   "nearby",
-	Short: "Searches for areas nearby a latitude and longitude",
-	Long: `Searches for areas nearby a latitude and longitude`,
-	Args: cobra.NoArgs,
-	RunE: func(cmd *cobra.Command, args []string) error {
-		lat, _ := cmd.Flags().GetFloat64("lat")
-		lon, _ := cmd.Flags().GetFloat64("lon")
-		fmt.Sprintf("Search area nearby: %f %f\n", lat, lon)
-		println()
-		areasResponse, err := sePushClient.SearchAreasByLatLong(lat, lon)
-		if err == nil {
-			areas := areasResponse.Areas
-			tbl := table.New("Count", "Id")
-			tbl.WithHeaderFormatter(headerFmt).WithFirstColumnFormatter(columnFmt)
-			for _, area := range areas {
-				tbl.AddRow(area.Count, area.Id)
-			}
-			tbl.Print()
-		}
-		return err
-	},
-}
-
-func init() {
-	searchCmd.AddCommand(nearbyCmd)
-
-	nearbyCmd.Flags().Float64("lat", -33.9249, "Latitude")
-	nearbyCmd.Flags().Float64("lon", 18.4241, "Longitude")
+type AllowanceResponse struct {
+	Allowance struct {
+		Count int    `json:"count"`
+		Limit int    `json:"limit"`
+		Type  string `json:"type"`
+	} `json:"allowance"`
 }

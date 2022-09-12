@@ -42,7 +42,7 @@ Ref: https://documenter.getpostman.com/view/1296288/UzQuNk3E#1881472b-c959-4259-
 		println("Retrieving information for area:", id)
 		println()
 		simulateEvent, _ := cmd.Flags().GetString("simulate-event")
-		areaResponse, err := client.SearchArea(id, simulateEvent )
+		areaResponse, err := sePushClient.SearchArea(id, simulateEvent )
 		if err == nil {
 			info := areaResponse.Info
 			tbl := table.New("Name", "Region")

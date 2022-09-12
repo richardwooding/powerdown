@@ -19,12 +19,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-package model
+package sepush
 
-type AllowanceResponse struct {
-	Allowance struct {
-		Count int    `json:"count"`
-		Limit int    `json:"limit"`
-		Type  string `json:"type"`
-	} `json:"allowance"`
+import (
+	"github.com/richardwooding/powerdown/model/sepush"
+)
+
+type Client interface {
+	Allowance() (*sepush.AllowanceResponse, error)
+	SearchAreasByText(text string) (*sepush.AreasResponse, error)
+	SearchAreasByLatLong(lat, lon float64) (*sepush.NearbyResponse, error)
+	SearchArea(id string, simulateEvent string) (*sepush.AreaResponse, error)
 }
