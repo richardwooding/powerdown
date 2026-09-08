@@ -196,3 +196,9 @@ Date        Day of week  Stages
                          06:00-10:30 14:00-16:30
                          06:00-10:30 14:00-18:30
 ```
+
+## Sponsor
+
+If this saves you time, you can [sponsor its maintenance](https://github.com/sponsors/richardwooding).
+Sponsorship pays for the unglamorous half — triage, dependency bumps, release plumbing — and is
+never a condition of getting help here.
